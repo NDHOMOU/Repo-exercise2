@@ -69,7 +69,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 200
+    "width": 200,
+    "collapsed": true
   },
   "right": {
     "id": "6eea79976d23bce4",
@@ -148,6 +149,8 @@
   },
   "active": "5180bf664505da25",
   "lastOpenFiles": [
+    "Screenshot 2024-06-04 at 11.57.02 AM.png",
+    "Screenshot 2024-06-04 at 11.39.00 AM.png",
     "2024-06-03.md",
     "Untitled.canvas",
     "Pasted image 20240602123248.png",

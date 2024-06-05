@@ -72,7 +72,7 @@ Module 1 additional resources:
 
 
 Module 2
-## Using Bash on Mac Terminal
+# Using Bash on Mac Terminal
 ### Bash commands
 
 Bash provides a list of commands for navigating through files, viewing the contents of files, and edit features for changing or updating the contents of a file. Below is a list of the most common commands:
@@ -129,3 +129,138 @@ There are three types of IO or input/output redirections. Standard input, stand
 ## Grep - Global regular expression print
 
 Grep is used for searching across files and folders as well as the contents of files.
+
+Additional resources:
+**Agile methodologies**
+[**https://www.planview.com/resources/guide/agile-methodologies-a-beginners-guide/**](https://www.planview.com/resources/guide/agile-methodologies-a-beginners-guide/)
+
+**Installing git on mac and windows, detailed instructions.**
+[**https://git-scm.com/book/en/v2/Getting-Started-Installing-Git**](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git "getting started installing git")
+
+**Bash Reference Manual**[https://www.gnu.org/software/bash/manual/html_node/index.html#SEC_Contents](https://www.gnu.org/software/bash/manual/html_node/index.html#SEC_Contents)
+
+**Bash Redirections**
+[https://www.gnu.org/software/bash/manual/html_node/Redirections.html#Redirections](https://www.gnu.org/software/bash/manual/html_node/Redirections.html#Redirections)
+
+**Bash Cheatsheet**
+[https://devhints.io/bash](https://devhints.io/bash "https://devhints.io/bash")
+
+**Grep Cheatsheet**
+[https://devhints.io/grep](https://devhints.io/grep)
+
+**Grep Manual**
+[https://man7.org/linux/man-pages/man1/grep.1.html](https://man7.org/linux/man-pages/man1/grep.1.html)
+
+**History and Timeline of Unix**
+[https://unix.org/what_is_unix/history_timeline.html](https://unix.org/what_is_unix/history_timeline.html)
+
+**History of Vim**
+[https://en.wikipedia.org/wiki/Vim_(text_editor)](https://en.wikipedia.org/wiki/Vim_(text_editor))
+
+**How to work with relative and absolute paths**
+[**https://www.geeksforgeeks.org/absolute-relative-pathnames-unix/**](https://www.geeksforgeeks.org/absolute-relative-pathnames-unix/)
+
+**Unix Commands Cheatsheet**
+[https://cheatography.com/jluis/cheat-sheets/bash-and-unix-commands/](https://cheatography.com/jluis/cheat-sheets/bash-and-unix-commands/)
+
+**Vim Cheatsheet**
+[https://vim.rtorr.com/](https://vim.rtorr.com/)
+
+Module 3
+# What is Git and GitHub?
+
+## Git
+
+Git is a version control system designed to help users keep track of changes to files within their projects. Git was designed to fix the problem that it's created, Linus Torvalds was having with managing the huge challenge of keeping track of all changes to the kernel, the operating system for Linux. Linux has thousands of contributors who commit changes and updates daily. Git was designed to help with the challenge of tracking all these changes and updates. As well as helping to keep track of changes, Git was also designed to tackle some of the shortcomings of other version control systems. The benefits that Git offers over similar systems include, better speed and performance, reliability, free and open source axis, and an accessible syntax. It's also important to note that Git is used predominantly via the command line. Developers tend to find Git syntax and commands easy to learn.
+
+## GitHub
+
+GitHub is a Cloud-based hosting service that lets you manage Git repositories from a user interface. A Git repository is used to track all changes to files in a specific folder, and keep a history of all those changes. It incorporates Git version control features and extends these by providing its own features on top. Some of the most common of these features include access control, pull requests, and automation.
+
+## Connecting to GitHub via HTTPS
+
+When using Github you might be required to authenticate using a Personal Access Token over HTTPS. A Personal Access Token is a special password that you use instead of your actual account password. When you're finished using the token, you can revoke it so that it can no longer be used. It is also possible to set an expiry time for the token. This helps to keep your account secure.
+
+**Generate a Personal Access Token**
+- **Step 1:** Log in to Github
+- **Step 2:** Click on the profile icon in the top right of the screen and select Settings.
+- **Step 3:** On the Settings screen, on the left-hand side click Developer Settings.
+- **Step 4:** On the Developer Settings screen, click **Personal access tokens**. Under that, click on **Tokens (classic)**. Then, click the **Generate new token** button and select **Generate new token (classic)**.
+- **Step 5:** On the New Personal Access Token page, enter a token name and an expiry time. If you wish to manually revoke the token, set the expiry time to No Expiration.
+- **Step 6:** Under scopes, select repo.
+- **Step 7:** Scroll to the end of the page and click Generate token.
+- **Step 8:** The token is now generated. Make sure to copy and keep note of the token as it will be hidden when you leave the page. This token can now be used when connecting to a repository over HTTPS.
+-  Note: If you lose the token, you can delete the old token and create a new one.
+### Accessing Repositories
+
+When accessing a repository and using HTTPS authentication, make sure you have access/permission to connect, and then just use the HTTPS address for the Git repository itself.
+
+## Connecting to GitHub via SSH
+
+If you plan to use Github from your local device, the recommended way to authenticate is using Secure Shell, or SSH for short. This requires the creation of keys: a public and a private key. The advantage of using SSH is that you don't need to enter in your credentials when interacting with the remote repository. The keys are generated and stored on your local machine and then the public key is copied to the Github server. After you finish setting up, every operation will be authenticated using the keys.
+
+### Generate SSH keys
+
+The process is the same for both Windows and Mac. On Windows, you can use the Git Bash terminal and on Mac, the standard terminal will work.
+
+- Open the terminal
+- Enter the following: ssh-keygen -t ed25519 -C "your@email.com"
+- Replace the email with your own and press enter.
+- It will prompt to enter a password. Hit enter to skip setting a password and do the same for entering the same passphrase again.
+![[Screenshot 2024-06-04 at 11.39.00 AM.png]]
+- Once you have confirmed it will generate the above to confirm the keys have been created.
+- Both keys will be stored in the .ssh folder.
+- In order to add our key to Github, we need to get a copy of the public key which is always identified as .pub in your local directory. 
+- Find the name of the key file using the below command. 
+```
+- ls ~/.ssh/ 
+```
+- Then, use the below command to copy the file, replacing the YOUR KEY with the name of the key file on your device. This step differs between Windows and Mac
+- For Mac: 
+```
+pbcopy < ~/.ssh/<YOUR KEY>.pub For Windows: cat ~/.ssh/<YOUR KEY>.pub | clip
+```
+- For Windows: 
+```
+cat ~/.ssh/<YOUR KEY>.pub | clip
+```
+
+### Adding Your Keys to Github
+
+We now need to add our public key to Github to grant access to the repositories we create.
+
+- **Step 1:** Log on to Github
+- **Step 2:** Click on the profile icon in the top right of the screen and select Settings.
+- **Step 3:** On the Settings screen, on the left-hand side under the Access section, click SSH and GPG Keys
+- **Step 4:** Click the New SSH key button in Green on the right-hand side of the screen.
+- **Step 5:** Enter a title and paste in your public key that you copied previously.
+- **Step 6:** Click the Add SSH key button. (You are now ready to access Github via SSH.)
+
+### Accessing Repositories
+- When accessing a repository and using SSH authentication, make sure to always use the SSH address of the repository.
+
+### Git Workflow
+
+![[Screenshot 2024-06-04 at 11.57.02 AM.png]]
+
+### Branches
+
+The approach of keeping everything at branch level is much easier than having everyone working from the main line. In fact, everyone working off the same branch is more likely to cause issues. Having independent branches makes the project easier to manage. Also, there's no limit to how many branches you can have.
+
+### Remote vs. local
+
+**Remote** - refers to any other remote repository to which developers can push changes. This can be a centralized repository, such as one provided by Git hub or repositories on other developer devices.Remote repo could be located on GitHub or other developer device.The remote code is accessed through a URI which is unique and only accessible to those who have permission local.
+
+**Cloning** (term. explanation) - Let's say we have a project called coding project one which is located on Git hub with a unique URL. In other words, this project is stored on a remote server. When a user wants to copy this project to their local device, they need to either perform a clone if it's the first time or pull it to get the latest changes. To clone a project a user must first choose a folder on their local machine. Coding project one is then cloned from the server and copied into the chosen folder. The user can then make changes to the project and push those changes back to the server. Other users working on the code base won't see those changes on their local machines unless they pull the latest changes from the server. One of the advantages of it is that you can work offline and then commit your changes when you are ready.
+
+**Local** - your own machine, laptop, desktop, mobile device.
+
+When you use **Git Push**, Git compares a snapshot of your local repository with the remote one and only replaces the files that have been changed.
+Using **Git Pull** you're taking all that data from the remote server. Git then merges the snapshot from the remote with the snapshot that's on your local. It will auto merge them if there is no conflicts.
+
+**Lab:** Using a Repository
+Objectives:
+- Create a repository
+- Clone a repository
+- Commit a new file to the repository
+- Push to a repository
