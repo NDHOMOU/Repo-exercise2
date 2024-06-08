@@ -62,10 +62,13 @@ Downtime or issues in production is damaging for a company as it does not instil
 Module 1 additional resources: 
 **About Version Control**
 [https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+
 **List of Version Control Software**
 [https://en.wikipedia.org/wiki/List_of_version-control_software](https://en.wikipedia.org/wiki/List_of_version-control_software)
+
 **The benefits of a distributed version control system**
 [https://about.gitlab.com/topics/version-control/benefits-distributed-version-control-system/](https://about.gitlab.com/topics/version-control/benefits-distributed-version-control-system/)
+
 **What is Cloning?**
 [**https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository**](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
 
@@ -114,6 +117,18 @@ Lab: "Make and change directories and files"
 - **mv file1.txt dir/** - moves "file1.txt" to dir1
 - **mkdir -p dir2/dir3** - **-p** flag to create the parent directories if they do not exist. In this case it will create the dir2 directory and then create the dir3 directory inside of dir2
 - **ls -l** - note how many files and directories are in current dir
+
+Tip: escaping spaces in CLI by using "" 
+- example:
+```
+personal@Device-MacBook-Pro GitHub % cd Meta Labs
+cd: string not in pwd: Meta
+```
+This is the correct way to change directory that contains space in its name
+```
+nemanja@Nemanjas-MacBook-Pro GitHub % cd "Meta Labs"
+```
+
 
 ## Pipes |
 
@@ -264,3 +279,320 @@ Objectives:
 - Clone a repository
 - Commit a new file to the repository
 - Push to a repository
+
+- **Step 1:** Create a new repository on your Github account named repo-exercise. Ensure that Add a README file is selected.
+- **Step 2:** Open the Terminal and authenticate using gh (Github CLI):
+```
+gh auth login
+```
+- **Step 3:** Create an authentication token in your Github account with specified scopes given in the terminal. Copy it from Github and paste it. Verify authorization was successful.
+- **Step 4:** Clone the repository using its GitHub CLI.
+```
+gh repo clone <YOUR USERNAME>/<REPOSITORY-NAME>
+```
+
+```
+gh repo clone userName/repo-exercise
+Cloning into 'repo-exercise'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Total 3 (delta 0), reused 0 (delta 0), pack-reused 0
+Receiving objects: 100% (3/3), done.
+```
+- **Step 5:** Move to the repo directory by using:
+```
+cd repo-exercise
+```
+- **Step 6:** Add the  result.txt to the repository folder.
+```
+touch result.txt
+```
+- **Step 7:** In the Git terminal, run the git status command. 
+```
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Untracked files:
+
+  (use "git add <file>..." to include in what will be committed)
+
+result.txt
+
+nothing added to commit but untracked files present (use "git add" to track)
+```
+- **Step 8:** Verify that the output shows result.txt as an untracked file.
+- **Step 9:** Run the command git add result.txt
+```
+git add result.txt
+```
+- **Step 10:** Run the git status command again.
+```
+git status
+On branch main
+Your branch is up to date with 'origin/main'.
+  
+
+Changes to be committed:
+
+  (use "git restore --staged <file>..." to unstage)
+
+new file:   result.txt
+```
+- **Step 11:** Verify that the output shows result.txt as a tracked file.
+- **Step 12:** Next, run the git commit command and specify the commit message as Successful exercise.
+- **Step 13:** Verify that the output shows result.txt with create mode
+- **Step 14:** Next, run the git push command.
+```
+git push
+
+Everything up-to-date
+```
+- **Step 15:** Verify that the output pushed successfully.
+- **Step 16:** On Github, go to your repository page.
+- **Step 17:** Verify that the result.txt file is listed. You may need to refresh the page to see the changes.
+
+## Resolving Conflicts
+
+Conflicts will normally occur when you try to merge a branch that may have competing changes. Git will try to auto-merge, but in the case of a conflict, it will need some confirmation. The competing changes need to be resolved by the end user. This process is called merging or rebasing.
+
+### Diff Commands
+
+**Git status** - tells you **which** files were changed.
+**Git diff** -tells you **what** changes were made.
+
+**Git diff** will compare the previous version of the file with your current one to find any differences. It will then tell you specifically what content has been removed as well as what content has been added to the file.
+
+Individual files, branches, and commits can all be compared with Git diff.
+
+
+### Blame
+
+Git has a very helpful command for keeping track of who did what and when. It's called **git blame**. The git blame command is used to look at changes of a specific file and show the dates, times, and users who made the changes.
+
+- Example:
+```
+git blame setup.py
+```
+	setup.py (any file name)
+
+| **Git Blame Message**         | **Format**         |
+| ------------------------- | -------------- |
+| **90125897**                  | **Commit ID/Hash** |
+| **Developer 1**               | **Author**         |
+| **2024-06-01**                | **Date**           |
+| **19:48:31**                  | **Time**           |
+| **+0000 1**                   | **Line number**    |
+| **`let add = (a , b) => {}`** | **Content**        |
+
+### Forking
+
+**Forking** - is another type of workflow. The key difference between branching and forking is that the workflow for forking creates a new repository entirely. Branching cuts a new branch from the same repository each time and each member of the team works on the single repository.
+You can use forking to contribute to another person's repository, or that of another organization, by creating your own copy.
+
+Additional resources:
+
+**Git: An Origin Story**
+[https://www.linuxjournal.com/content/git-origin-story](https://www.linuxjournal.com/content/git-origin-story)
+
+**Git Cheatsheet**
+[https://education.github.com/git-cheat-sheet-education.pdf](https://education.github.com/git-cheat-sheet-education.pdf)
+
+**Git patterns and anti-patterns for successful developers**
+[https://youtu.be/t_4lLR6F_yk](https://youtu.be/t_4lLR6F_yk)
+
+**Tech Talk: Linus Torvalds on git**
+[https://www.youtube.com/watch?v=4XpnKHJAok8](https://www.youtube.com/watch?v=4XpnKHJAok8)
+
+**Vim Cheatsheet**
+[https://devhints.io/vim](https://devhints.io/vim)
+
+### Tips
+
+- Don't make your edits directly on the master branch, always create and checkout a fork before making changes
+    
+- Make sure you push your development branch to your fork
+    
+- You can select the current branch inside Github by clicking the branch dropdown
+
+Git common commands:
+**SETUP**:
+Configuring user information used across all local repositories.
+- set a name that is identifiable for credit when review version history
+```
+git config --global user.name “[firstname lastname]”
+```
+- set an email address that will be associated with each history marker
+```
+git config --global user.email “[valid-email]”
+```
+- set automatic command line coloring for Git for easy reviewing
+```
+git config --global color.ui auto
+```
+
+
+**SETUP & INIT**:
+Configuring user information, initializing and cloning repositories.
+- initialize an existing directory as a Git repository
+```
+git init
+```
+- retrieve an entire repository from a hosted location via URL
+```
+git clone [url]
+```
+
+**STAGE & SNAPSHOT**:
+Working with snapshots and the Git staging area.
+- show modified files in working directory, staged for your next commit
+```
+git status
+```
+- add a file as it looks now to your next commit (stage)
+```
+git add [file]
+```
+- unstage a file while retaining the changes in working directory
+```
+git reset [file]
+```
+- diff of what is changed but not staged
+```
+git diff
+```
+- diff of what is staged but not yet commited
+```
+git diff --staged
+```
+- commit your staged content as a new commit snapshot
+```
+git commit -m “[descriptive message]”
+```
+
+**BRANCH & MERGE**
+Isolating work in branches, changing context, and integrating changes.
+- list your branches. a * will appear next to the currently active branch
+```
+git branch
+```
+- create a new branch at the current commit
+```
+git branch [branch-name]
+```
+- switch to another branch and check it out into your working directory
+```
+git checkout
+```
+- merge the specified branch’s history into the current one
+```
+git merge [branch]
+```
+- show all commits in the current branch’s history
+```
+git log
+```
+
+**INSPECT & COMPARE**
+Examining logs, diffs and object information.
+- show the commit history for the currently active branch
+```
+git log
+```
+- show the commits on branchA that are not on branchB
+```
+git log branchB..branchA
+```
+- show the commits that changed file, even across renames
+```
+git log --follow [file]
+```
+- show the diff of what is in branchA that is not in branchB
+```
+git diff branchB...branchA
+```
+- show any object in Git in human-readable format
+```
+git show [SHA]
+```
+
+**TRACKING PATH CHANGES**
+Versioning file removes and path changes.
+- delete the file from project and stage the removal for commit
+```
+git rm [file]
+```
+- change an existing file path and stage the move
+```
+git mv [existing-path] [new-path]
+```
+- show all commit logs with indication of any paths that moved
+```
+git log --stat -M
+```
+
+**IGNORING PATTERNS**
+Preventing unintentional staging or commiting of files.
+- Save a file with desired paterns as .gitignore with either direct string matches or wildcard globs.
+```
+logs/
+*.notes
+pattern*/
+```
+- system wide ignore patern for all local repositories
+```
+git config --global core.excludesfile [file]
+```
+
+**SHARE & UPDATE**
+Retrieving updates from another repository and updating local repos.
+- add a git URL as an alias
+```
+git remote add [alias] [url]
+```
+- fetch down all the branches from that Git remote
+```
+git fetch [alias]
+```
+- merge a remote branch into your current branch to bring it up to date
+```
+git merge [alias]/[branch]
+```
+- Transmit local branch commits to the remote repository branch
+```
+git push [alias] [branch]
+```
+- fetch and merge any commits from the tracking remote branch
+```
+git pull
+```
+
+**REWRITE HISTORY**
+Rewriting branches, updating commits and clearing history.
+- apply any commits of current branch ahead of specified one
+```
+git rebase [branch]
+```
+- clear staging area, rewrite working tree from specified commit
+```
+git reset --hard [commit]
+```
+
+**TEMPORARY COMMITS**
+Temporarily store modified, tracked files in order to change branches.
+- Save modified and staged changes
+```
+git stash
+```
+- list stack-order of stashed file changes
+```
+git stash list
+```
+- write working from top of stash stack
+```
+git stash pop
+```
+- discard the changes from top of stash stack
+```
+git stash drop
+```
