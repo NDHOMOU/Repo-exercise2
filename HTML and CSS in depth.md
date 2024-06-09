@@ -5,15 +5,15 @@ HTML Tags, typical HTML page structure looks like this:
 <!DOCTYPE html>
 <html>
 	<head>
+	</head>
+	<body>
+		<header>
 		logo goes here
 		<nav>
 			<ul>
 				<li><a href="#home">Home</a></li>
 			</ul>
 		</nav>
-	</head>
-	<body>
-		<header>
 		</header>
 		<main>
 			<article>
@@ -119,3 +119,56 @@ Table tags
 | `<caption>`  | Defines the caption of a table element.                                                                                                                                      |
 | `<colgroup>` | Defines a semantic group of one or more columns in a table for formatting.                                                                                                   |
 | `<col>`      | Defines a semantic column in a table.                                                                                                                                        |
+
+## Metadata
+
+The `<meta>` element has two attributes, name and content. The name attribute specifies the name of the metadata and the content attribute specifies the value of metadata.
+```
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="author" content="Joe Doe">
+	</head>
+	<body>
+	</body>
+</html>
+```
+
+Metadata that plays role in SEO (search engine optimization):
+- **Author** - The author metadata specifies the author of the web page.
+- **Description** - The description metadata describes the content of the web page. This is often used by search engines as descriptive text in search results. The name attribute is set to description and the content attribute is the descriptive text.
+- **Keywords** - The keywords metadata was previously used to provide search keywords for search engines. However, this led to a lot of websites using the keywords metadata to manipulate search rankings. One of the major search engines now ignores this metadata and another uses keywords metadata as a spam indicator because of this, it's recommended not to include this metadata in modern web pages.
+- **Robots** - tells search engines if and how they should analyze your web page. The name robots comes from the automated software often referred to as bots, that search engines used to analyze websites. The content attribute for Robots has four possible values. Index tells the bot to analyze the page. Follow tells the bot to also visit all links on the web page. No index tells the bot not to analyze the page. Some bots will ignore this so it's best not to rely on this to stop bots from analyzing your page and no follow tells the bot not to visit links on the web page. Again, some bots will ignore this value so it's best not to rely on it.
+- **Viewport** - The view port metadata is important when designing responsive web pages. There are many values available for view ports metadata. The most used value for the mobile experiences is to set the width to device dash with and the initial scale to 1.0
+
+### Metadata cheat sheet IMPORTANT!
+**HTML `<meta>` tags**
+The structure of a meta tag is as it follows:
+- **Name** - The name of the property can be anything you like, although browsers usually expect a value they understand and can take an action upon. An example would be `<meta name="author" content="name">` to state the author of the page.
+- **Content** - The content field specifies the property's value. For example, you can use `<meta name="language" content="english">`, to specify the language of the webpage to search engines.
+- **Charset** - The charset is a special field that lets you specify the character encoding used for the page so that the browser can display it properly. The most frequently used is **utf-8**, and you would add it to your HTML header as follows: `<meta charset="UTF-8">`
+- **HTTP-equiv** - This field stands for HTTP equivalent, and it's used to simulate HTTP response headers. This is rare to see, and it's recommended to use HTTP headers over HTML http-equiv meta tags. For example, the next tag would instruct the browser to refresh the page every 30 minutes: `<meta http-equiv="refresh" content="30">`
+
+### Basic meta tags (meta tags For SEO)
+- `<meta name="description"/>` provides a brief description of the web page.
+- `<meta name=”title”/>` specifies the title of the web page.
+- `<meta name="author" content="name">` specifies the author of the web page.
+- `<meta name="language" content="english">` specifies the language of the web page.
+- `<meta name="robots" content="index,follow" />` tells search engine how to crawl or index a certain page.
+- `<meta name="google"/>` tells Google not to show the sitelinks search box for your page when showing search page.
+- `<meta name="googlebot" content=”notranslate” />` tells Google you don’t want to provide an automatic translation for your page if the user uses a different language.
+- `<meta name="revised" content="Sunday, July 18th, 2010, 5:15 pm" />` specifies the last modified date and time on which you have made certain changes.
+- `<meta name="rating" content="safe for kids">` specifies the expected audience for your page.
+- `<meta name="copyright" content="Copyright 2022">` specifies a Copyright.
+
+### `<meta http-equiv="..."/>` tags
+- `<meta http-equiv="content-type" content="text/html">` specifies the format of the document returned by the server.
+- `<meta http-equiv="default-style"/>` specifies the format of the styling document.
+- `<meta http-equiv="refresh"/>` specifies the duration of the page before it's considered stale.
+- `<meta http-equiv=”Content-language”/>` specifies the language of the page.
+- `<meta http-equiv="Cache-Control" content="no-cache">` instructs the browser how to cache your page.
+
+### Responsive design/mobile meta tags
+- `<meta name="format-detection" content="telephone=yes"/>` indicates that telephone numbers should appear as hypertext links that can be clicked to make a phone call.
+- `<meta name="HandheldFriendly" content="true"/>` specifies that the page can be properly visualized on mobile devices.
+- `<meta name="viewport" content="width=device-width, initial-scale=1.0"/>` specifies the area of the window in which web content can be seen.

@@ -416,6 +416,10 @@ Additional resources:
 - You can select the current branch inside Github by clicking the branch dropdown
 
 Git common commands:
+**git pull** - command is used to fetch and download content from a remote repo and immediately update the local repo to match that content.
+**git pull** - command is used to upload local repo content to a remote repo.
+**git commit** - command is used to capture a snapshot of the projects's currently staged changes.
+
 **SETUP**:
 Configuring user information used across all local repositories.
 - set a name that is identifiable for credit when review version history
