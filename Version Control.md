@@ -60,6 +60,7 @@ Cyber-security should also play a big role in what gets released in production. 
 Downtime or issues in production is damaging for a company as it does not instill confidence in end users. If something is down or broken it can cause the company to lose potential customers.
 
 Module 1 additional resources: 
+
 **About Version Control**
 [https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
 
@@ -71,7 +72,6 @@ Module 1 additional resources:
 
 **What is Cloning?**
 [**https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository**](https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository)
-
 
 
 Module 2
