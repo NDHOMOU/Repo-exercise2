@@ -172,3 +172,55 @@ The structure of a meta tag is as it follows:
 - `<meta name="format-detection" content="telephone=yes"/>` indicates that telephone numbers should appear as hypertext links that can be clicked to make a phone call.
 - `<meta name="HandheldFriendly" content="true"/>` specifies that the page can be properly visualized on mobile devices.
 - `<meta name="viewport" content="width=device-width, initial-scale=1.0"/>` specifies the area of the window in which web content can be seen.
+
+## Bare bones layout
+
+VSC workspace keep CSS and JS files in separate folders (specific folders for CSS and JS) index.html can remain in the root folder itself.
+
+-  `<link>` always goes at the end of `<head>`
+- TIP: create a template for future projects and keep it on local machine or git repo.
+
+
+## UX with meta tags
+
+Open Graph Protocol is a set of metadata rules that allows web pages to describe themselves to social networks. Social media platforms use these meta tags to create a preview of the shared web page.
+
+**The Open Graph Protocol requires that you must always include four properties on a webpage. These are title, type, URL, and image.**
+```
+<head>
+	<meta property="og:title" content="A brief description">
+	<meta property="og:type" content="website">
+	<meta property="og:url" content="https://www.example.com">
+	<meta property="og:image" content="image.png">
+</head>
+```
+
+Additional resources
+
+[HTML meta tags](https://www.dofactory.com/html/metatags)
+
+[Semantic elements](https://www.freecodecamp.org/news/semantic-html5-elements/)
+
+[Simple bare bones HTML webpage](https://www.instructables.com/Bare-Bones-Web-Page/)
+
+[HTML5/CSS bare-bones newsletter template](https://www.vandelaydesign.com/newsletter-tutorial/)
+
+[Add open graph social metadata- Twitter](https://www.digitalocean.com/community/tutorials/how-to-add-twitter-card-and-open-graph-social-metadata-to-your-webpage-with-html)
+
+[Essential meta tags for social media](https://css-tricks.com/essential-meta-tags-social-media/)
+
+[The meta element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta "The meta HTML element")
+
+[Open graph protocol](https://ogp.me/)
+
+[Using open graph protocol on website](https://www.freecodecamp.org/news/what-is-open-graph-and-how-can-i-use-it-for-my-website/)
+
+[Meta OGP guide for webmasters](https://developers.facebook.com/docs/sharing/webmasters/)
+
+[Bootstrap with HTML](https://www.bootstrapdash.com/blog/use-bootstrap-with-html)
+
+[Bootstrap Layout Examples](https://getbootstrap.com/docs/5.2/examples/ "Bootstrap Layout Examples")
+
+
+## Forms and validation
+
