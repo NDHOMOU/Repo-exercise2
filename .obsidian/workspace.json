@@ -25,14 +25,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "HTML and CSS in depth.md",
+                "file": "HTML in depth.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "e12663a5c2dba052",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "CSS in depth.md",
                 "mode": "source",
                 "source": false
               }
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -99,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "HTML and CSS in depth.md",
+                "file": "CSS in depth.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -116,7 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "HTML and CSS in depth.md",
+                "file": "CSS in depth.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -139,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "HTML and CSS in depth.md"
+                "file": "CSS in depth.md"
               }
             }
           }
@@ -160,10 +172,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "fe94fcfcf033af63",
+  "active": "e12663a5c2dba052",
   "lastOpenFiles": [
+    "CSS in depth.md",
+    "HTML in depth.md",
     "Version Control.md",
-    "HTML and CSS in depth.md",
     "Screenshot 2024-06-04 at 11.57.02 AM.png",
     "Screenshot 2024-06-04 at 11.39.00 AM.png",
     "2024-06-03.md",
