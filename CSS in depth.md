@@ -515,7 +515,7 @@ add(a, b)
 div
 	margin add(10px, 20px)
 ```
-What is evident in the code above is that first, you have defined a function called ‘add’ and passed the variables ‘a’ and ‘b’ inside it. You added some functionality inside the function. In this case, you add the two values a and b with the ‘+’ or addition operator. Once you’ve done that, instead of assigning a value to the ‘margin’ property, you pass the function add with numeric pixel values passed to it. The output of this code will yield to a form ‘margin 30px’ after compilation. 
+What is evident in the code above is that first, you have defined a function called ‘add’ and passed the variables ‘a’ and ‘b’ inside it. You added some functionality inside the function. In this case, you add the two values a and b with the ‘+’ or addition operator. Once you’ve done that, instead of assigning a value to the ‘margin’ property, you pass the function add with numeric pixel values passed to it. The output of this code will yield to a form ‘`margin 30px`’ after compilation. 
 
 These functions are useful when adding color gradation or creating advanced geometric shapes on your web page. 
 
