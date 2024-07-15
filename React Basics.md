@@ -988,3 +988,471 @@ export default function InputComponent() {
 ```
 To do this, let's define a React component and call it `InputComponent`. This component render three things:
 - An input field
+- Any text that has been entered into the filed
+- A Reset button to set the filed back to its default state
+As the user starts typing within the text field, the current text that was typed is also displayed.
+
+The state variable `inputText` and the `setText` method are used to set the current text that is typed. The `useState` hook is initialized at the beginning of the component.
+`const[inputText, setText] = useState('hello');`
+By default, the `inputText` will be set to "hello".
+As the user types, the `handleChange` function, reads the latest input value from the browser's input DOM element, and calls the `setText` function, to update the local state of `inputText`.
+```
+function handleChange(e) {
+	setText(e.target.value);
+};
+```
+Finally, clicking the reset button will update the `inputText` back to "hello".
+Keep in mind that the `inputText` here is local state and is local to `InputComponent`. This means that outside of this component, `inputText` is unavailable and unknown. In React, state always referred to the local state of a component.
+Hooks also come with a set of rules, that you need to follow while using them. This applies to all React hooks, including the `useState` hook.
+- You can only call hooks at the top level of your component or your own hooks.
+- You cannot call hooks inside loops or conditions.
+- You can only call hooks from React functions, and not regular JS functions.
+To demonstrate, let's extend the previous example, to include three input text field with a single component. This could be a registration form with fields for fist name, last name and email.
+```
+import { useState } from 'react';
+
+export default function RegisterForm() {
+	const [form, setForm] = useState({
+		firstName:'Luke',
+		lastName:'Jones',
+		email:'lukeJones@email.com',
+	})
+
+	return (
+		<>
+			<label>
+				First name:
+				<input
+					value={form.firstName}
+					onChange={e => {
+						setForm({
+							...form,
+							firstName: e.target.value
+						});
+					}}
+				/>
+			</label>
+			<label>
+				Last name:
+				<input
+					value={form.lastName}
+					onChange={e => {
+						setForm({
+							...form,
+							lastName: e.target.value
+						});
+					}}
+				/>
+			</label>
+			<label>
+				Email:
+				<input
+					value={form.email}
+					onChange={e => {
+						setForm({
+						...form,
+						email: e.target.value
+						});
+					}}
+				/>
+			</label>
+			<p>
+				{form.firstName}{' '}
+				{form.lastName}{' '}
+				({form.email})
+			</p>
+		</>
+	);
+};
+```
+Notice that you are using a `form` object to store the sate of all three text input field values:
+```
+const[form, setForm] =useState({
+	fistName:'Luke',
+	lastName:'Jones',
+	email:'lukeJones@email.com',
+});
+```
+You do not need to have three separate state variables in this case, and instead you can consolidate them all together into one `form` object for better readability.
+
+In addition to the `useState` hook, there are other hooks that come in handy such as `useContext`, `useMemo`, `useRef`, etc. When you need to share logic and reuse the same logic across several components, you can extract the logic into a custom hook. Custom hooks offer flexibility and can be used for a wide range of use-cases such as form handling, animation, timers and more.
+
+##### The `useRef` hook
+We use the  `useRef` hook to access a child element directly.
+When you invoke the `useRef` hook, it will return a `ref` object. The `ref` object has a property named `current`.
+```
+function TextInputWithFocusButton() {
+	const inputEl = useRef (null);
+	const onButtonClick = () => {
+		//`current` points to the mounted text input element
+		inputEl.current.focus();
+	};
+
+	return (
+		<>
+			<input ref={inputEl} type="text" />
+			<button onClick={onButtonClick}>Focus the input</button>
+		</>
+	);
+};
+```
+Using the ref attribute on the input element, I can then access the current value and invoke the focus() method on it, thereby focusing the input filed.
+
+There are situations where accessing the DOM directly is needed, and this is where the useRef hook comes into play.
+
+##### Prop drilling
+Prop drilling is a situation where you are passing data from a parent to a child component, then to a grandchild component, and so on, until it reaches more distant component further down the component tree, where this data is required.
+Here is a very simple app that focuses on the process of props passing through several components.
+Please not that the goal here is not to build an app that would exist in the real world. The goal of this app is to examine the practice of prop drilling, so that you can focus on it and understand isolation.
+Here is the code for the app:
+```
+function Main(props) {
+	return <Header msg={props.msg} />;
+}
+
+function Header(props) {
+	return (
+		<div style={{border:"10px solid whitesmoke"}}>
+			<h1>Header here</h1>
+			<Wrapper msg={props.msg} />
+		</div>
+	);
+};
+
+function Wrapper(props) {
+	return (
+		<div style={{ border: "10px solid lightgray" }}>
+			<h2>Wrapper here</h2>
+			<Button msg={props.msg} />
+		</div>
+	);
+};
+
+function Button(props) {
+
+	return (
+		<div style={{ border: "20px solid orange" }}>
+			<h3>This is the Button component</h3>
+			<button onClick={() => alert(props.msg)}>Click me!</button>
+		</div>
+	);
+};
+
+function App() {
+
+	return (
+		<Main
+			msg="I passed through the Header and the Wrapper and I reached the Button component"
+		/>
+	);
+};
+
+export default App;
+```
+This app is simple enough that you should be able to understand it on your own, Let's address the main points to highlight what is happening in the code above.
+The top-most component of this app is the `App` component. The `App` component returns the `Main` component. The `Main` component accepts a single attribute, named `msg`.
+At the very top of the app, the `Main` function declares how the `Main` component should behave. The `Main` component is responsible for rendering the `Header` component. **Note that when the `Header` component is rendered from inside `Main`, it also receives the `msg` prop**.
+The `Header` component's function declaration renders an `h1` that reads "Header here", then another component named `Wrapper`. Note that the naming here is irrelevant - the components `Header` and `Wrapper`are named to make it a bit more like it might appear in a real app- but ultimately, the focus is on having multiple components, rather then describing specific component names properly.
+So, the `Header` component's function declaration has a return statement, which **renders the `Wrapper` component with the `msg` prop passed to it**.
+In the `Wrapper` component's function declaration is coded to receive the props object, then inside of the wrapping `div` show an `h3`. The `h3` reads "this is the button component", and then under that, there's a button element with an `onClick` event-handling attribute. This is passed to an arrow function which should alert the string that comes from the `props.mgs` prop.
+
+Note: Context consumer - is any component that uses the state provided by context API
+Passing state notes:
+- Context API is used to work with state from a global store in react.
+- You should always use array destructuring when working with `useState`
+- The convention is to name the state-setting function using the word "set" plus whatever the name of the state variable is, all written in camelCase
+- Lifting up state means moving state up from a child to the parent component
+- Lifting upstate can sometimes lead to prop drilling, which lowers maintainability and modularity of a React app
+
+Notes Data and state:
+- In React, data flows in one way: from a parent component to a child component.
+- One-way data flow ensures that the data is flowing from top to bottom in the component hierarchy.
+- State date is data inside a component that a component, which that component controls and can mutate.
+- Prop drilling is a situation where you are passing data from a parent to a child component, then to a grandchild component, and so on, until it reaches a more distant component further down the component tree, where this data is required.
+- The distinction between stateful and stateless components is that the latter doesn't have its own state.
+- Props are immutable and thus you should not attempt to update them in children components.
+- The context API allows you to Avoid having to pass state down through multiple levels of components.
+Additional Resources
+- [React docs website URL which discusses the issue in depth](https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html) 
+- [Data flows down](https://reactjs.org/docs/state-and-lifecycle.html#the-data-flows-down) 
+- [The Power Of Not Mutating Data](https://reactjs.org/docs/optimizing-performance.html#the-power-of-not-mutating-data) 
+- [Add Inverse Data Flow](https://reactjs.org/docs/thinking-in-react.html#step-5-add-inverse-data-flow) 
+- [Component state](https://reactjs.org/docs/faq-state.html) 
+- [State: A Component's Memory](https://beta.reactjs.org/learn/state-a-components-memory) 
+- [Sharing State Between Components](https://beta.reactjs.org/learn/sharing-state-between-components) 
+- [State as a Snapshot](https://beta.reactjs.org/learn/state-as-a-snapshot) 
+- [Basic useState examples](https://beta.reactjs.org/apis/usestate#examples-basic) 
+- [Synchronizing with effects - putting it all together](https://beta.reactjs.org/learn/synchronizing-with-effects#putting-it-all-together) 
+- [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) 
+- [The event loop in JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
+
+Module 3
+### Basic Type of navigation
+'Dont make me think' book
+In React, the entire app is loaded inside a single div, you're not actually visiting different pages, and Different views are rendered when React makes changes to the Virtual DOM, with React updating the real DOM accordingly.
+
+#### Navigation
+**Before Single-Page apps**
+Most websites were implemented as multi-page applications. That is, when a user clicks on a link, the browser navigates to a new webpage, sends a request to the web server; this then responds with the full webpage and the new page is displayed in the browser.
+This can make your application resource intensive to the Web Server. CPU time is spent rendering dynamics pages and network bandwidth is used sending entire webpages back for every request. If your website is complex it may appear slow to your users, even slower of they have a slow or limited internet connection.
+To solve this problem, many web developers develop their web applications as single page applications.
+
+**Single page apps**
+You’re using many Single Page Applications every day. Think of your favorite social network, or online email provider, or the map application you use to find local businesses. Their excellent user experiences are driven by Single Page Applications.
+A Single Page Application allows the user to interact with the website without downloading entire new webpages. Instead, it rewrites the current webpage as the user interacts with it. The outcome is that the application will feel faster and more responsive to the user.
+
+**How does a Single-Page app work?**
+When the user navigates to the web application in the browser, the Web Server will return the necessary resources to run the application. There are two approaches to serving code and resources in Single Page Applications.
+1. When the browser requests the application, return and load all necessary HTML, CSS and JavaScript immediately. This is known as _bundling_. 
+2. When the browser requests the application, return only the minimum HTML, CSS and JavaScript needed to load the application. Additional resources are downloaded as required by the application, for example, when a user navigates to a specific section of the application. This is known as _lazy loading_ or _code splitting_. 
+Both approaches are valid and are used depending on the size, complexity and bandwidth requirements of the application. If your application is complex and has a lot of resources, your bundles will grow quite large and take a long time to download – possibly ending up slower than a traditional web application!
+Once the application is loaded, all logic and changes are applied to the current webpage.
+
+**An Example of a Single-Page App**
+In a traditional website, when the button is clicked, the browser will send a POST request to the web server. The web server will return a new web page containing the button and movie name, and the web browser renders the new page.
+In a Single Page Application, when the button is clicked, the browser will send a POST request to a web server. The web server will return a JSON object. The application reads the object and updates the Label with the movie name.
+See, more efficient!
+
+**Practical Differences between Single-page apps and multi-page apps**
+You have a web application that has a navigation bar on top and two pages. One page shows the latest news, and the other shows the current user’s profile page. The navigation bar contains a link for each page.
+In a traditional website, when the user clicks the Profile link, the web browser sends the request to the web server. The web server generates the HTML page and sends it back to the web browser. The web browser then renders the new web page.
+In a Single Page Application, different pages are broken into templates (or views). Each view will have HTML code containing variables that can be updated by the application.
+The web browser sends the request to the web server, and the web server sends back a JSON object. The web browser then updates the web page by inserting the template with the variables replaced by the values in the JSON object.
+
+**Anchor tag elements in single-page Elements**
+A single-page application can’t have regular anchor tag elements as a traditional web app can.
+The reason for this is that the default behavior of an anchor tag is to load another HTML file from a server and refresh the page. This page refresh is not possible in a SPA that's powered by a library such as React because a total page refresh is not the way that a SPA works, as explained earlier in this lesson item.
+Instead, a SPA comes with its own special implementation of anchor tags and links, which only give an illusion of loading different pages to the end user when in fact, they simply load different components into a single element of the real DOM into which the virtual DOM tree gets mounted and updated.
+That's why navigation in a single-page app is fundamentally different from its counterpart in a multi-page app. Understanding the concepts outlined in this lesson item will make you a more well-rounded React developer.
+
+#### The navbar
+React Router - A library that gives you more control over the routing of components.
+`npm i react-router-dom@6`
+Confirm if it installed correctly, check package.json
+
+##### Applying conditional rendering
+State is all the data your app is currently working with. With this in mind, you can decide to conditionally render specific components in your app, based on whether specific state data has specific values. To make this possible, React works with the readily available JavaScript syntax and concepts.
+Consider a minimalistic productivity app.
+
+The app takes the client computer’s current datetime, and based on the data, displays one of two messages on the screen:
+1. For workdays, the message is: “Get it done” 
+2. For weekends, the message is: “Get some rest” 
+There are a few ways you can achieve this in React.
+One approach would include setting a component for each of the possible messages, which means you’d have two components. Let’s name them `Workdays` and `Weekends`.
+
+Then, you’d have a `CurrentMessage` component, which would render the appropriate component based on the value returned from the `getDay()` function call.
+
+Here’s a simplified `CurrentMessage` component:
+```
+function CurrentMessage() {
+    const day = new Date().getDay();
+    if (day >= 1 && day <= 5) {
+        return <Workdays />
+    }
+    return <Weekends />
+}
+```
+Instead of calculating it directly, you could use some historical data instead, and perhaps get that data from a user via an input, from a parent component.
+In that case, the `CurrentMessage` component might look like this:
+```
+function CurrentMessage(props) {
+    if (props.day >= 1 && props.day <= 5) {
+        return <Workdays />
+    }
+    return <Weekends />
+}
+```
+**Conditional rendering with the help of element variables**
+To further improve your `CurrentMessage` component, you might want to use element variables. This is useful in some cases, where you want to streamline your render code - that is, when you want to separate the conditional logic from the code to render your UI.
+Here’s an example of doing this with the `CurrentMessage` component:
+```
+function CurrentMessage({day}) {
+	const weekday = (day >= 1 && day <= 5);
+	const weekend = (day >= 6 && day <= 7);
+	let message;
+
+	if (weekday) {
+		message = <Workdays />
+	} else if (weekend) {
+		message = <Weekends />
+	} else {
+		message = <ErrorComponent />
+	}
+
+	return (
+		<div>
+            {message}
+        </div>
+	)
+}
+```
+The output of the `CurrentMessage` component will depend on what the received value of the day variable is. On the condition of the day variable having the value of any number between 1 and 5 (inclusive), the output will be the contents of the `Workdays` component. Otherwise, on the condition of the day variable having the value of either 6 or 7, the output will be the contents of the `Weekends` component.
+
+**Conditional rendering using the logical AND operator**
+Another interesting approach in conditional rendering is the use of the logical `AND` operator `&&`. In the following component, here's how the `&&` operator is used to achieve conditional rendering:
+```
+function LogicalAndExample() {
+    const val = prompt('Anything but a 0')
+
+    return (
+        <div>
+            <h1>Please don't type in a zero</h1>
+            {val &&
+                <h2>Yay, no 0 was typed in!</h2>
+            }
+        </div>
+    )
+}
+```
+There are a few things to unpack here, so here is the explanation of the `LogicalAndExample` component, top to bottom:
+
+1. First, you ask the user to type into the prompt, specifying that you require anything other than a zero character; and you save the input into the `val` value.
+2. In the return statement, an `h1` heading is wrapped inside a `div` element, and then curly braces are used to include a JSX expression. Inside this JSX expression is a single `&&` operator, which is surrounded by some code both on its left and on its right sides; on the left side, the val value is provided, and on the right, a piece of JSX is provided. 
+To understand what will be output on screen, consider the following example in standard JavaScript:
+`true && console.log('This will show')`
+If you ran this command in the browser’s console, the text ‘This will show’ will be output.
+On the flip side, consider the following example:
+`false && console.log('This will never show')`
+If you ran _this_ command, the output will just be the boolean value of `false`.
+In other words, if a prop gets evaluated to `true`, using the `&&` operator, you can render whatever JSX elements you want to the right of the `&&` operator.
+
+##### Conditional components
+Have you ever visited a website that requited a user account? To log in you click on a Log In button and once you've logged in the Log In button changes to a Log Out button.
+This is often done using something called conditional rendering.
+Switch statements allow you to change the behaviour of code based on certain conditions being met.
+For example, you can set a variable to a different value based on the result of a condition check.
+```
+let name;
+if (Math.random() > 0.5) {
+	name = "Mike"
+} else {
+	name="Susan"
+}
+```
+
+```
+let name;
+let newUser = true;
+if (Math.random() > 0.5 && newUser) {
+	name = "Mike"
+} else {
+	name = "Susan"
+}
+```
+Conditional rendering is built on the same principle. By using conditions, you can return different child components. This is often done using the props that are passed into the parent component, but can also be done base on component state.
+Let's say you have two child components called `LoginButton` and `LogoutButton`; each displaying their corresponding button.
+In the parent component, named `LogInOutButton`, you can check the props passed into the parent component and return a different child component based on the value of the props.
+In this example, the props contains a property named `isLoggedIn`. When this is set to `true`, the `LogoutButton` component is returned. Otherwise, the `LoginButton` component is returned.
+```
+function LogInOutButton(props) {
+const isLoggedIn = props.isLoggedIn;
+	if (isLoggedIn) {
+		return <LogoutButton />;
+	} else {
+		return<LoginButton />;
+	}
+}
+```
+Then when the `LogInOutButton` parent component is used, the prop can be passed in.
+`<LogInOutButton isLoggedIn={false} />`
+This is a simple example showing how you can change what is displayed based on a condition check. You will use this often when developing React applications.
+Note: The logical AND operator is used to conditionally render some JSX elements based on whether a value to the LEFT of the AND operator evaluates to true.
+
+### What is an asset and where does it live?
+Best practice is to keep assets folder within source folder. You should keep the sound file and image file in the Assets folder, as they will be used directly in your app components and are necessary for the app to work correctly.
+
+##### Bundling assets
+Earlier, you learned what assets are in React and the best practices for storing them in your project folders.
+In this reading, you will learn about the advantages and disadvantages of embedding assets, including examples of client/server-side assets. You will also learn about the trade-offs inherent in using asset-heavy apps.
+The apps files will likely be bundled when working with a React app. Bundling is a process that takes all the imported files in an app and joins them into a single file, referred to as **bundle**. Several tools can perform this bundling. Since, in this course you have used the `create-react-app` to build various React Apps, you will focus on webpack. This is because webpack is the build in tool for the `create-react-app`.
+
+Let’s start by explaining what webpack is and why you need it.
+Simply put, webpack is a module bundler.
+
+Practically, this means that it will take various kinds of files, such as SVG and image files, CSS and SCSS files, JavaScript files, and TypeScript files, and it will bundle them together so that a browser can understand that bundle and work with it.
+
+Why is this important?
+
+When building websites, you could probably do without webpack since your project's structure might be straightforward: you may have a single CSS library, such as Bootstrap, loaded from a CDN (content delivery network). You might also have a single JavaScript file in your static HTML document. If that is all there is to it, you do not need to use webpack in such a scenario.
+
+However, modern web development can get complex.
+
+Here is an example of the first few lines of code in a single file of a React application:
+```
+import React from 'react';
+import '@atlaskit/css-reset';
+import styled from 'styled-components';
+import './index.css';
+import { ThemeProvider } from './contexts/theme';
+import { DragDropContext } from 'react-beautiful-dnd';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Nav from './components/Nav';
+import data from './data';
+import Loading from './components/Loading';
+```
+
+The imports here are from fictional libraries and resources because the specific libraries are not necessary. All these different imports can be of various file types: .js, .svg, .css, and so on.
+
+In turn, all the imported files might have their own imported files, and even those might have their imports.
+
+This means that depending on other files, all of these files can create a **dependency graph**. The order in which all these files are loading is essential. That dependency graph can get so complex that it becomes almost impossible for a human to structure a complex project and bundle all those dependencies properly.
+
+This is the reason you need tools like webpack.
+So, webpack builds a dependency graph and bundles modules into one or more files that a browser can consume.
+
+While it is doing that, it also does the following:
+- It converts modern JS code - which can only be understood by modern browsers - into older versions of JavaScript so that older browsers can understand your code. This process is known as _transpiling_. For example, you can transpile ES7 code to ES5 code using webpack.  
+- It optimizes your code to load as quickly as possible when a user visits your web pages. 
+- It can process your SCSS code into the regular CSS, which browsers can understand. 
+- It can build source maps of the bundle's building blocks  
+- It can produce various kinds of files based on rules and templates. This includes HTML files, among others.
+Another significant characteristic of webpack is that it helps developers create modern web apps.
+
+It helps you achieve this using two modes: **production** mode or **development** mode.
+
+In development mode, webpack bundles your files sot that they are optimized for speed. This means that files are minified and organized to take up the least amount of memory. So they are optimized for speed because these bundles are fast to download when a user visits the website online.
+
+Once all the source files of your app have been bundled into a single bundle file, then that single bundle file gets served to a visitor browsing the live version of your app online, and the entire apps contents get served at once.
+
+This works great for smaller apps, but if you have a more extensive app, this approach is likely to affect your site’s speed. The longer it takes for a web app to load, the more likely the visitor will leave and move on to another unrelated website. There are several ways to tackle this issue of a large bundle.
+
+One such approach is code-splitting, a practice where a module bundler like webpack splits the single bundle file into multiple bundles, which are then loaded on an as-needed basis. With the help of code-splitting, you can **lazy load** only the parts that the visitor to the app needs to have at any given time. This approach significantly reduces the download times and allows React-powered apps to get much better speeds.
+
+There are other ways to tackle these problems.
+
+An example of a viable alternative is SSR (Server-side rendering).
+
+With SSR, React components are rendered to HTML on the server, and the visitor downloads the finished HTML code. An alternative to SSR is client-side rendering, which downloads the index.html file and then lets React inject its own code into a dedicated HTML element (the **root** element in create-react-app). In this course, you’ve only worked with client-side rendering.
+Sometimes, you can combine client-side rendering and server-side rendering. This approach results in what’s referred to as **isomorphic apps**.
+In this reading, you learned about the advantages and disadvantages of embedding assets, including examples of client/server-side assets. You also learned about the trade-offs inherent in the use of asset-heavy apps.
+
+##### Media packages
+`npm install react-player`
+
+```
+import React from "react";
+import ReactPlayer from "react-player/youtube";
+
+const App = () => {
+	return (
+		<div>
+			<MyVideo />
+		</div>
+	);
+};
+
+const MyVideo = () => {
+	return (
+		<ReactPlayer url='https://www.youtube.com/watch?v=ysz5S6PUM-U' />
+	);
+};
+
+export default App;
+```
+
+Additional resources:
+- [webpack docs](https://webpack.js.org/guides/getting-started/)
+- [webpack asset management](https://webpack.js.org/guides/asset-management/)
+- [npm docs](https://docs.npmjs.com/)
+- [ReactPlayer on npm](https://www.npmjs.com/package/react-player)
+- [Video and audio content on the web](https://developer.mozilla.org/en-US/docs/Learn/HTML/Multimedia_and_embedding/Video_and_audio_content)
