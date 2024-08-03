@@ -54,9 +54,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "a049ec37f53ef651",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Advanced React.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
         ],
-        "currentTab": 3
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -75,7 +87,7 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "byCreatedTime"
               }
             }
           },
@@ -123,7 +135,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "React Basics.md",
+                "file": "Advanced React.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -140,7 +152,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "React Basics.md",
+                "file": "Advanced React.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -163,7 +175,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "React Basics.md"
+                "file": "Advanced React.md"
               }
             }
           }
@@ -184,18 +196,20 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "69ee5e733d154a23",
+  "active": "a049ec37f53ef651",
   "lastOpenFiles": [
-    "React Basics.md",
-    "CSS in depth.md",
-    "Pasted image 20240622213957.png",
+    "Untitled 1.md",
+    "Advanced React.md",
+    "Screenshot 2024-06-04 at 11.39.00 AM.png",
+    "Screenshot 2024-06-04 at 11.57.02 AM.png",
     "Pasted image 20240622213845.png",
     "Pasted image 20240622213650.png",
+    "Pasted image 20240622213957.png",
+    "React Basics.md",
+    "CSS in depth.md",
     "Untitled.md",
     "HTML in depth.md",
     "Version Control.md",
-    "Screenshot 2024-06-04 at 11.57.02 AM.png",
-    "Screenshot 2024-06-04 at 11.39.00 AM.png",
     "2024-06-03.md",
     "Untitled.canvas",
     "Pasted image 20240602123248.png",
